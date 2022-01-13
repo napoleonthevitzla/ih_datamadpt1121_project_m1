@@ -12,3 +12,5 @@ def distance_meters(lat_start, long_start, lat_finish, long_finish):
     start = to_mercator(lat_start, long_start)
     finish = to_mercator(lat_finish, long_finish)
     return start.distance(finish)
+
+# Test comment
