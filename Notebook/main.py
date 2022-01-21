@@ -71,7 +71,7 @@ def getdata_escuelas_infantiles(url):
 def concat_dataset_ayuntamiento(data1,data2):
     ayuntamiento_data = pd.concat([data1, data2], axis=0)
     ayuntamiento_data['address.street-address']=ayuntamiento_data['address.street-address'].str.title()
-    ayuntamiento_data = ayuntamiento_data.rename(columns={'location.latitude':'lat_start','location.longitude':'long_start','title':'Place of interest','address.street-address':'Place address'})
+    ayuntamiento_data = ayuntamiento_data.rename(columns={'location.latitude':'lat_start','location.longitude':'long_start','title':'Place of interest','address.street-address':'Place address','Tipo_Centro':'Type of place'})
     ayuntamiento_data["PUNTO A"] = ayuntamiento_data.apply(lambda x: to_mercator(x["lat_start"],x["long_start"]), axis = 1)
     result = ayuntamiento_data
     return result
@@ -91,7 +91,7 @@ def concat_dataset_proyect(data1,data2):
 def result_one(data):
     all_results = data[data["Place of interest"] == input('Pon el lugar de interés: ')]
     selection = all_results[all_results['Distancia'] == all_results['Distancia'].min()] # Comprobar si es Distancia o Distance
-    result_one = selection[["Place of interest","Tipo_Centro","Place address","BiciMAD station","Station location"]]
+    result_one = selection[["Place of interest","Type of place","Place address","BiciMAD station","Station location"]]
     return result_one
 
 ## FUNCIÓN PARA RECIBIR EL INPUT Y DEVOLVER TODOS LOS RESULTAOS
@@ -99,7 +99,7 @@ def result_one(data):
 def result_all(data):
     all_results = data[data["Place of interest"] == input('Pon el lugar de interés: ')]
     selection = all_results[all_results['Distancia'] == all_results['Distancia']]
-    result = selection[["Place of interest","Tipo_Centro","Place address","BiciMAD station","Station location"]]
+    result = selection[["Place of interest","Type of place","Place address","BiciMAD station","Station location"]]
     return result
 
 
@@ -133,18 +133,18 @@ data_all = result_all(data_project)
 #Escuela infantil municipal Doña Francisquita
 
 # 4º Creamos los CSV con el resultado 
-todas_ubicaciones1 =create_csv (data_all)
-ubicacion_mas_cercana1 = create_csv (data_one)
+#todas_ubicaciones1 =create_csv (data_all)
+#ubicacion_mas_cercana1 = create_csv (data_one)
 
 ## FUNCIÓN EJECUCIÓN
 
 if args.ejecucion == "MasCercana":
-    ubicacion_mas_cercana = ubicacion_mas_cercana1
-    #ubicacion_mas_cercana.to_csv("../output/ubicacion_mas_cercana.csv", sep= ";")
+    #ubicacion_mas_cercana = data_one
+    data_one.to_csv("../data/bicimad_AH_one.csv", sep= ";")
     print("archivo estacion mas cercana guardado en la carpeta de output")
 elif args.ejecucion == "TodasEstaciones":
-    todas_ubicaciones = todas_ubicaciones
-    #todas_ubicaciones.to_csv("../output/todas_las_ubicaciones.csv", sep= ";")
+    #todas_ubicaciones = data_all
+    data_all.to_csv("../data/bicimad_AH_all.csv", sep= ";")
     print("archivo de todas las estaciones guardado en la carpeta de output")
 else:
     print("opcion erronea, solo podemos meter: MasCercana o TodasEstaciones")
