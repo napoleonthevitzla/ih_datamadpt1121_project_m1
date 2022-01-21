@@ -1,10 +1,10 @@
+# Show my bike! - IronHack Proyect
+Ironhack Madrid - Data Analytics Part Time - January 2021 - Project Module 1 - Antonio Huerta
 <p align="left"><img src="https://cdn-images-1.medium.com/max/184/1*2GDcaeYIx_bQAZLxWM4PsQ@2x.png"></p>
 
-# __ih_datamadpt1121_project_m1__
+## BRIEFING  📌
 
-Ironhack Madrid - Data Analytics Part Time - November 2021 - Project Module 1
-
-## **Data:**
+Create a Python App (**Show my bike!**) that allow their potential users to find the nearest BiciMAD station to a set of places of interest.
 
 There are 2 main datasources:
 
@@ -13,68 +13,72 @@ There are 2 main datasources:
 Server name:   sqlironhack
 Database:      BiciMAD
 ```
-> __IMPORTANT =>__ Username and password will be provided in class.
-
-
 - **API REST.** We will use the API REST from the [Portal de datos abiertos del Ayuntamiento de Madrid](https://datos.madrid.es/nuevoMadrid/swagger-ui-master-2.2.10/dist/index.html?url=/egobfiles/api.datos.madrid.es.json#/), where you can find the __Catálogo de datos__ with more than 70 datasets.
 
-> __IMPORTANT =>__ Specific datasets will be assigned to each student in order to perform the challenges.
+**Show my bike!** create a `Bicimad_AH.csv` file in "data" folder with a table of data. The info of the table will be all results by default but user can also choice the nearest BiciMAD station.
 
 
----
+## Getting ready
 
-## **Main Challenge:**
-
-You must create a Python App (**Data Pipeline**) that allow their potential users to find the nearest BiciMAD station to a set of places of interest. The output table should look similar to:
-
-| Place of interest | Type of place (*) | Place address | BiciMAD station | Station location |
-|---------|----------|-------|------------|----------|
-| Auditorio Carmen Laforet (Ciudad Lineal)   | Centros Culturales | Calle Jazmin, 46 | Legazpi | Calle Bolívar, 3 |
-| Centro Comunitario Casino de la Reina | Centros municipales de enseñanzas artísticas | Calle Casino, 3 | Chamartin | Calle Rodríguez Jaén, 40 |
-| ...     | ...            | ...        | ...      | ...        |
-> __(*)__ There is a list of datasets each one with different places. A specific dataset will be assigned to each student. 
+These instructions will allow you to get to know the project and how it is works a little better.
 
 
-**Your project must meet the following requirements:**
+### WorkFlow Description  📋
 
-- It must be contained in a GitHub repository which includes a README file that explains the aim and content of your code. You may follow the structure suggested [here](https://github.com/potacho/data-project-template).
+**Show My Bike!** ---- **Performing Process**
 
-- It must create, at least, a `.csv` file including the requested table (i.e. Main Challenge). Alternatively, you may create an image, pdf, plot or any other output format that you may find convenient. You may also send your output by e-mail, upload it to a cloud repository, etc. 
+1st Data Extraction:
+- We extract data with City Council (Data_Public_School and Data_Kinder_garden).
+We incorporate data to identify each dataset in the ""Type of Place"" column
 
-- It must provide, at least, two options for the final user to select when executing using `argparse`: **(1)** To get the table for every 'Place of interest' included in the dataset (or a set of them), **(2)** To get the table for a specific 'Place of interest' imputed by the user.
+For them we will apply the following functions:
+**getdata_public_school
+getdata_escuelas_infantiles**
 
-**Additionally:**
+- We extract data from Bicimad source
+For them we will apply the functions:
+**GetData_Bicimad** ((includes the to_mercator function to identify geographic points of all bicimad data)
 
-- You must prepare a 4 minutes presentation (ppt, canva, etc.) to explain your project (Instructors will provide further details about the content of the presentation).
+2º We add parameters and formulate the necessary information to be able to calculate distances:
+For them we will apply the following functions:
+**concat_dataset_ayuntamiento** (includes the to_mercator function to identify geographical points of all City Hall data)
+**concat_dataset_project** (includes the Distance_M function to add to dataset the distance in m)
 
-- The last slide of your presentation must include your candidate for the **'Ironhack Data Code Beauty Pageant'**. 
+3º We obtain the solution:
+We obtain the information by applying the following functions:
+**Result_all**
+**Result_one**
+**Arg_parse**
+
+ShowMybike will save a file in your data folder called ""location_mas_cercana.csv"" or ""Allbotications.csv"""
 
 
----
+**Project WorkFlow image***
+<p align="left"><img src="https://drive.google.com/file/d/1j0_XNpKh5O8BM5DFSg92UvRLc6AXmTRI/view?usp=sharing"></p>
 
-### **Bonus 1:**
 
-You may include in your table the availability of bikes in each station.
 
----
+### Into the box - Folders & files  📦
 
-### **Bonus 2:**
+In This repo you will find the following folders:
 
-You may improve the usability of your app by using [FuzzyWuzzy](https://pypi.org/project/fuzzywuzzy/).
+- Data - Where info from source is hosted as bicimad.
+- Result - Here you will find the result of your exercise
+- Modules - Where you will find functions scripts
+- Notebook - Here you will find main.py to exectute Showmybike
 
----
+* You will also find 
+**Project image***
+<p align="left"><img src="https://drive.google.com/file/d/1aSxouxrdJIB3r3FS5kcgvT-RagOKrqM9/view?usp=sharing"></p>
 
-### **Bonus 3:**
 
-Feel free to enrich your output data with any data you may find relevant (e.g.: wiki info for every place of interest).
+### Requirements: Install libraries ⚙️
 
---- 
+You will need to install the following libraries in your project enviroment to execute **ShowmyBike**
 
-## **Project Main Stack**
+- [Python 3.7](https://www.python.org/) - Lenguaje principal
 
 - [Azure SQL Database](https://portal.azure.com/)
-
-- [SQL Alchemy](https://docs.sqlalchemy.org/en/13/intro.html) (alternatively you can use _Azure Data Studio_)
 
 - [Requests](https://requests.readthedocs.io/)
 
@@ -84,19 +88,66 @@ Feel free to enrich your output data with any data you may find relevant (e.g.: 
 
 - [Argparse](https://docs.python.org/3.7/library/argparse.html)
 
+- [Numpy](https://docs.python.org/3.7/library/argparse.html)
+
+- [Sys](https://docs.python.org/3.7/library/argparse.html)
+
+- [Os](https://docs.python.org/3.7/library/argparse.html)
 
 
+## Deployment 🚀
+
+Follow this instructions to execute the program from your terminal:
+
+To execute the program you must open your terminal and access the Notebook folder and run the following command:
+
+```>>> Python Main.py.```
+
+You can also execute including the default value, obtaining the same result as the previous statement:
+
+```>>> Python Main.py -Excution nearest```
+
+The program will request the user from the Input of the Child School or the Public School to identify Bicimad Stations.
+
+```Example: INPUT >> Municipal Children's School Doña Francisquita```
+
+By default, the program will install a document called **Bicimad_Ah.cvs** in the **Data** folder with the result of the nearest station.
+
+To obtain the information of all the seasons close to a point you will be executed the following command:
+
+```>>> Python Main.py -Excution nearest```
+
+The program will install a document called **Bicimad_Ah.cvs** in the **Data** folder with the result of all bicimad stations.
 
 
+### Documentation 📖
+
+Puedes encontrar mucho más de cómo utilizar este proyecto en esta [Presentación](https://github.com/tu/proyecto/wiki)
 
 
+### Tools & Frameworks 🛠️
+
+This tools help me to works better: 
+
+* [Python](https://www.python.org/) - Lenguaje principal
+* [Jupyter Notebook](https://jupyter.org/) - Usado como editor de código.
+* [GitHub](https://jupyter.org/) - Usado como repositorio de código.
+* [Trello](https://trello.com/) - Usado para la gestión y documentación del proyecto.
+* [Visual Studio Code](https://code.visualstudio.com/) - Usado como editor de código.
+* [Swagger](https://datos.madrid.es/nuevoMadrid/swagger-ui-master-2.2.10/dist/index.html?url=/egobfiles/api.datos.madrid.es.json) - Usado para extraer el data de Ayuntamiento source.
+* [Azure SQL Database](https://portal.azure.com/) - Usado para extraer el data de bicimad source.
 
 
+### Thanks to 🎁
+
+* Comenta a otros sobre este proyecto 📢
+* Invita una cerveza 🍺 o un café ☕ a alguien del equipo. 
+* Da las gracias públicamente 😊.
+* etc.
 
 
+### Author ✒️
 
- 
-
-
- 
-
+* **Antonio Huerta** - *Proyecto 1 IronHack*: Showmybike
+---
+⌨️ con ❤️ por [Antonio Huerta](https://github.com/napoleonthevitzla)🤓
